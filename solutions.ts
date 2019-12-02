@@ -1,7 +1,43 @@
-console.log("solution A", getSolution1A());
-console.log("solution B", getSolution1B());
-function getSolution1A() {}
-function getSolution1B() {}
+import * as fs from "fs";
+console.log("Solution 1A: ", getSolution1A());
+console.log("solution 1B", getSolution1B());
+
+function read(fileName: string): string {
+  return fs.readFileSync(fileName, "utf8");
+}
+
+function vectorize(data: string) {
+  //let lines = data.split("\n");
+  //return lines.replace(/\D/g, "");
+  return data.split("\n").map(x =>
+    x
+      .replace(/^-?[0-9]\d*(\.\d+)?$/g, "")
+      .replace(/\D/g, " ")
+      .split(" ")
+      .filter(y => y !== "")
+      .map(z => Number(z))
+  );
+}
+function getSolution1A() {
+  const solution = read("input1.txt")
+    .split("\n")
+    .map(x => Math.floor(Number(x) / 3) - 2)
+    .reduce((a, b) => a + b, 0);
+  //console.log(solution);
+  return solution;
+}
+function recursion1B(data: number): number {
+  if (data < 0) return 0;
+  return data + recursion1B(Math.floor(data / 3) - 2);
+}
+function getSolution1B() {
+  const solution = read("input1.txt")
+    .split("\n")
+    .map(x => recursion1B(Math.floor(Number(x) / 3) - 2))
+    .reduce((a, b) => a + b, 0);
+  //console.log(solution);
+  return solution;
+}
 function getSolution2A() {}
 function getSolution2B() {}
 function getSolution3A() {}
