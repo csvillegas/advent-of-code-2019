@@ -1,6 +1,8 @@
 import * as fs from "fs";
-console.log("Solution 1A: ", getSolution1A());
-console.log("solution 1B", getSolution1B());
+console.log("Solution 1A:", getSolution1A());
+console.log("solution 1B:", getSolution1B());
+console.log("solution 2A:", getSolution2A(12, 2));
+console.log("solution 2B:", getSolution2B(19690720));
 
 function read(fileName: string): string {
   return fs.readFileSync(fileName, "utf8");
@@ -38,8 +40,33 @@ function getSolution1B() {
   //console.log(solution);
   return solution;
 }
-function getSolution2A() {}
-function getSolution2B() {}
+function getSolution2A(noun: number, verb: number) {
+  const data = read("input2.txt")
+    .split(",")
+    .map(x => Number(x));
+  data[1] = noun;
+  data[2] = verb;
+  let iteration = 0;
+  let oppCode = data[iteration];
+  while (oppCode !== 99) {
+    const opp1Pos = data[iteration * 4 + 1];
+    const opp2Pos = data[iteration * 4 + 2];
+    const writePos = data[iteration * 4 + 3];
+    if (oppCode === 1) data[writePos] = data[opp1Pos] + data[opp2Pos];
+    else if (oppCode === 2) data[writePos] = data[opp1Pos] * data[opp2Pos];
+    iteration += 1;
+    oppCode = data[iteration * 4];
+  }
+  return data[0];
+}
+function getSolution2B(target: number) {
+  for (let noun = 0; noun < 100; noun++) {
+    for (let verb = 0; verb < 100; verb++) {
+      const solution = getSolution2A(noun, verb);
+      if (solution === target) return 100 * noun + verb;
+    }
+  }
+}
 function getSolution3A() {}
 function getSolution3B() {}
 function getSolution4A() {}
