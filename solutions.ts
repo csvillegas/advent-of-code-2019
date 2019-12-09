@@ -8,8 +8,8 @@ import * as fs from "fs";
 // console.log("solution 4B", getSolution4B());
 //console.log("solution 5A:", getSolution5A());
 //console.log("solution 5B", getSolution5B());
-console.log("solution 6A:", getSolution6A());
-console.log("solution 6B", getSolution6B());
+//console.log("solution 8A:", getSolution8A());
+console.log("solution 8B", getSolution8B());
 
 function read(fileName: string): string {
   return fs.readFileSync(fileName, "utf8");
@@ -276,7 +276,7 @@ function getSolution6B() {
 function getSolution8A() {
   const width = 25;
   const height = 6;
-  const data = read("input6.txt").split("");
+  const data = read("input8.txt").split("");
   const layers = [];
   for (let i = 0; i < data.length / (width * height); i++) {
     layers.push(data.slice(width * height * i, width * height * (i + 1)));
@@ -295,7 +295,29 @@ function getSolution8A() {
 function getSolution7A() {}
 function getSolution7B() {}
 //function getSolution8A() {}
-function getSolution8B() {}
+function getSolution8B() {
+  const width = 25;
+  const height = 6;
+  const data = read("input8.txt").split("");
+  const layers = [];
+  for (let i = 0; i < data.length / (width * height); i++) {
+    layers.push(data.slice(width * height * i, width * height * (i + 1)));
+  }
+  const image = [];
+  for (let i = 0; i < layers[0].length; i++) {
+    let pixel = 2;
+    for (let j = 0; j < layers.length; j++) {
+      if (layers[j][i] != 2) {
+        pixel = layers[j][i];
+        break;
+      }
+    }
+    image.push(pixel);
+  }
+  for (let i = 0; i < height; i++) {
+    console.log(image.slice(i * width, (i + 1) * width).join(" "));
+  }
+}
 function getSolution9A() {}
 function getSolution9B() {}
 function getSolution10A() {}
